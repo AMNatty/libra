@@ -4,17 +4,17 @@ plugins {
 }
 
 group "cz.tefek"
-version "20.0.0.1-alpha.0"
+version "0.0.1-alpha.0"
 description "A Java based UI layout library pluggable into any renderer."
 
 wrapper {
-    distributionType = Wrapper.DistributionType.ALL
-    gradleVersion = '6.6.1'
+    distributionType Wrapper.DistributionType.ALL
+    gradleVersion '6.6.1'
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_15
-    targetCompatibility = JavaVersion.VERSION_15
+    sourceCompatibility JavaVersion.VERSION_15
+    targetCompatibility JavaVersion.VERSION_15
 }
 
 repositories {
