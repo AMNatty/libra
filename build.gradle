@@ -1,0 +1,30 @@
+plugins {
+    id "java"
+    id "java-library"
+}
+
+group "cz.tefek"
+version "20.0.0.1-alpha.0"
+description "A Java based UI layout library pluggable into any renderer."
+
+wrapper {
+    distributionType = Wrapper.DistributionType.ALL
+    gradleVersion = '6.6.1'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_15
+    targetCompatibility = JavaVersion.VERSION_15
+}
+
+repositories {
+    mavenCentral()
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding "UTF-8"
+}
+
+dependencies {
+
+}
