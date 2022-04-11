@@ -14,7 +14,7 @@ java {
 
 tasks.withType<Wrapper> {
     distributionType = Wrapper.DistributionType.ALL
-    gradleVersion = "7.2"
+    gradleVersion = "7.4.2"
 }
 
 repositories {
@@ -22,12 +22,8 @@ repositories {
     mavenCentral()
 
     maven {
-        name = "GitHubPackages"
-        url = uri("https://maven.pkg.github.com/493msi/plutoengine/")
-        credentials {
-            username = "493msi"
-            password = System.getenv("GITHUB_PACKAGES_KEY")
-        }
+        name = "Vega"
+        url = uri("https://vega.botdiril.com/")
     }
 }
 
@@ -36,12 +32,14 @@ tasks.withType<JavaCompile> {
 }
 
 dependencies {
-    implementation("org.jetbrains", "annotations", "20.1.0")
+    implementation("org.jetbrains", "annotations", "23.0.0")
 
     implementation("com.fasterxml.jackson.core", "jackson-databind", "2.12.3")
     implementation("com.fasterxml.jackson.dataformat", "jackson-dataformat-yaml", "2.12.3")
 
-    implementation("org.joml", "joml", "1.10.2")
+    api("org.joml", "joml", "1.10.2")
+    api("org.joml", "joml-primitives", "1.10.0")
+
     /*
     implementation("org.slf4j", "slf4j-api", "1.8.0-beta4")
     implementation("org.slf4j", "slf4j-simple", "1.8.0-beta4")
