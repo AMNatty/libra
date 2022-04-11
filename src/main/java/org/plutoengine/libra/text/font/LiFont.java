@@ -8,11 +8,17 @@ public abstract class LiFont<G extends LiFont<G, M>.GlyphAtlas, M extends GlyphM
     private final String name;
     private final Map<Integer, M> metrics;
     protected G atlas;
+    LiFontFamily<?, G, M> family;
 
     protected LiFont(String name)
     {
         this.name = name;
         this.metrics = new HashMap<>();
+    }
+
+    public LiFontFamily<?, G, M> getFamily()
+    {
+        return this.family;
     }
 
     public String getName()
