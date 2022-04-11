@@ -1,6 +1,5 @@
 package org.plutoengine.libra.command.impl;
 
-import org.plutoengine.graphics.gui.IGUIShader;
 import org.plutoengine.libra.command.EnumGUIPipelineCommand;
 
 public non-sealed class LiCommandSwitchShader<S> extends LiCommand
