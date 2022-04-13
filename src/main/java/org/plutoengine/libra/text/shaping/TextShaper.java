@@ -3,6 +3,7 @@ package org.plutoengine.libra.text.shaping;
 import org.plutoengine.libra.text.LiTextInfo;
 import org.plutoengine.libra.text.font.GlyphMetrics;
 import org.plutoengine.libra.text.font.LiFont;
+import org.plutoengine.libra.text.font.LiFontFamily;
 
 import java.util.EnumSet;
 
@@ -36,8 +37,8 @@ public class TextShaper<M extends GlyphMetrics, T extends LiFont<T, M>.GlyphAtla
         return this;
     }
 
-    public LiTextInfo shape(F font, String text)
+    public LiTextInfo shape(LiFontFamily<F> font, String text, TextStyleOptions style)
     {
-        return this.strategy.shape(this.featureSet, font, text);
+        return this.strategy.shape(this.featureSet, font, text, style);
     }
 }

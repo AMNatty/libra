@@ -37,16 +37,10 @@ dependencies {
     implementation("com.fasterxml.jackson.core", "jackson-databind", "2.12.3")
     implementation("com.fasterxml.jackson.dataformat", "jackson-dataformat-yaml", "2.12.3")
 
-    api("org.joml", "joml", "1.10.2")
-    api("org.joml", "joml-primitives", "1.10.0")
-
-    /*
-    implementation("org.slf4j", "slf4j-api", "1.8.0-beta4")
-    implementation("org.slf4j", "slf4j-simple", "1.8.0-beta4")
-    implementation("org.apache.logging.log4j", "log4j-core", "2.16.0")
-    implementation("org.apache.logging.log4j", "log4j-api", "2.16.0")
-    implementation("org.apache.logging.log4j", "log4j-slf4j-impl", "2.16.0")
-    */
+    if (project.parent != null && project.parent!!.ext.has("isPlutoBuild"))
+        api(project(":plutoengine:plutolib"))
+    else
+        api("org.plutoengine", "plutolib", "22.1.0.0-alpha.0")
 
     implementation("org.apache.commons", "commons-lang3", "3.11")
 }

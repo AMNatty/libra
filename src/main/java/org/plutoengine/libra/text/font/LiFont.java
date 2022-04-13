@@ -3,12 +3,12 @@ package org.plutoengine.libra.text.font;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class LiFont<G extends LiFont<G, M>.GlyphAtlas, M extends GlyphMetrics>
+public abstract class LiFont<G extends LiFont<G, M>.GlyphAtlas, M extends GlyphMetrics> implements AutoCloseable
 {
     private final String name;
     private final Map<Integer, M> metrics;
     protected G atlas;
-    LiFontFamily<?, G, M> family;
+    LiFontFamily<?> family;
 
     protected LiFont(String name)
     {
@@ -16,7 +16,7 @@ public abstract class LiFont<G extends LiFont<G, M>.GlyphAtlas, M extends GlyphM
         this.metrics = new HashMap<>();
     }
 
-    public LiFontFamily<?, G, M> getFamily()
+    public LiFontFamily<?> getFamily()
     {
         return this.family;
     }
@@ -55,5 +55,11 @@ public abstract class LiFont<G extends LiFont<G, M>.GlyphAtlas, M extends GlyphM
         {
             return this.glyphInfoMap.get(codepoint);
         }
+    }
+
+    @Override
+    public void close()
+    {
+
     }
 }

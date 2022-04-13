@@ -1,18 +1,13 @@
 package org.plutoengine.libra.text.font;
 
+import org.plutoengine.libra.text.shaping.FontStyleValue;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class LiFontFamily<F extends LiFont<G, M>, G extends LiFont<G, M>.GlyphAtlas, M extends GlyphMetrics>
+public final class LiFontFamily<F extends LiFont<?, ?>> implements AutoCloseable
 {
-    public static final String STYLE_BOLD = "bold";
-    public static final String STYLE_BLACK = "black";
-    public static final String STYLE_REGULAR = "regular";
-    public static final String STYLE_BOLD_ITALIC = "bold italic";
-    public static final String STYLE_ITALIC = "italic";
-    public static final String STYLE_MEDIUM = "medium";
-
     private final Map<String, F> styles;
 
     public LiFontFamily()
@@ -20,7 +15,7 @@ public final class LiFontFamily<F extends LiFont<G, M>, G extends LiFont<G, M>.G
         this.styles = new HashMap<>();
     }
 
-    public void add(String style, F font)
+    public void add(@FontStyleValue String style, F font)
     {
         this.styles.put(style, font);
         font.family = this;
@@ -31,8 +26,15 @@ public final class LiFontFamily<F extends LiFont<G, M>, G extends LiFont<G, M>.G
         return Collections.unmodifiableMap(this.styles);
     }
 
-    public F getStyle(String style)
+    public F getStyle(@FontStyleValue String style)
     {
         return this.styles.get(style);
+    }
+
+    @Override
+    public void close()
+    {
+        this.styles.values()
+            .forEach(LiFont::close);
     }
 }

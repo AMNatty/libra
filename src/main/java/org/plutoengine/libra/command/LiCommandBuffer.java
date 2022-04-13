@@ -2,10 +2,9 @@ package org.plutoengine.libra.command;
 
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix3fc;
-import org.plutoengine.libra.command.impl.LiCommand;
-import org.plutoengine.libra.command.impl.LiCommandSetTransform;
-import org.plutoengine.libra.command.impl.LiCommandSwitchShader;
-import org.plutoengine.libra.command.impl.LiCommandSwitchTexture;
+import org.plutoengine.libra.command.impl.*;
+import org.plutoengine.libra.paint.LiPaint;
+import org.plutoengine.util.color.Color;
 
 import java.util.*;
 import java.util.stream.Stream;
@@ -17,10 +16,12 @@ public class LiCommandBuffer implements Iterable<LiCommand>
     private Object texture;
     private Object shader;
     private Matrix3fc transform;
+    private LiPaint paint;
 
     public LiCommandBuffer()
     {
         this.commands = new LinkedList<>();
+        this.commands.push(new LiCommandSetPaint(LiPaint.solidColor(Color.WHITE)));
     }
 
     public LiCommandBuffer pushAll(LiCommandBuffer commandBuffer)
@@ -46,9 +47,22 @@ public class LiCommandBuffer implements Iterable<LiCommand>
                 this.transform = trans;
             }
 
+            case SET_PAINT -> {
+                removeAllUntil(EnumSet.of(EnumGUIPipelineCommand.SET_PAINT), EnumSet.of(EnumGUIPipelineCommand.DRAW_MESH));
+
+                var paint = ((LiCommandSetPaint) command).getPaint();
+
+                if (paint.equals(this.paint))
+                    break;
+
+                this.commands.add(command);
+                this.paint = paint;
+            }
+
             case SWITCH_SHADER -> {
                 // This does have side effects, however in practice it is unwanted to switch shaders like that
-                removeAllUntil(EnumSet.of(EnumGUIPipelineCommand.SWITCH_SHADER, EnumGUIPipelineCommand.SET_TRANSFORM), EnumSet.of(EnumGUIPipelineCommand.DRAW_MESH));
+                removeAllUntil(EnumSet.of(EnumGUIPipelineCommand.SWITCH_SHADER, EnumGUIPipelineCommand.SET_TRANSFORM, EnumGUIPipelineCommand.SET_PAINT),
+                    EnumSet.of(EnumGUIPipelineCommand.DRAW_MESH));
 
                 var shd = ((LiCommandSwitchShader<?>) command).getShader();
 

@@ -2,7 +2,7 @@ package org.plutoengine.libra.command.impl;
 
 import org.plutoengine.libra.command.EnumGUIPipelineCommand;
 
-public abstract sealed class LiCommand permits LiCommandDrawMesh, LiCommandSetTransform, LiCommandSwitchShader, LiCommandSwitchTexture
+public abstract sealed class LiCommand permits LiCommandDrawMesh, LiCommandSetPaint, LiCommandSetTransform, LiCommandSwitchShader, LiCommandSwitchTexture
 {
     private final EnumGUIPipelineCommand type;
 
