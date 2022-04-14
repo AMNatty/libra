@@ -1,6 +1,8 @@
 plugins {
     java
     `java-library`
+    `maven-publish`
+    signing
 }
 
 group = "cz.tefek"
@@ -10,6 +12,9 @@ description = "A Java based UI layout library pluggable into any renderer."
 java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
+
+    withJavadocJar()
+    withSourcesJar()
 }
 
 tasks.withType<Wrapper> {
@@ -26,6 +31,36 @@ repositories {
         url = uri("https://vega.botdiril.com/")
     }
 }
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            from(components["java"])
+        }
+    }
+
+    repositories {
+        maven {
+            name = "Vega"
+            url = uri("https://vega.botdiril.com/")
+            credentials {
+                val vegaUsername: String? by project
+                val vegaPassword: String? by project
+
+                username = vegaUsername
+                password = vegaPassword
+            }
+        }
+    }
+}
+
+signing {
+    val signingKey: String? by project
+    val signingPassword: String? by project
+    useInMemoryPgpKeys(signingKey, signingPassword)
+    sign(publishing.publications["maven"])
+}
+
 
 tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
