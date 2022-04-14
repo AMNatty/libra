@@ -1,15 +1,20 @@
 package org.plutoengine.libra.command;
 
 import org.jetbrains.annotations.NotNull;
+import org.joml.Matrix3f;
 import org.joml.Matrix3fc;
 import org.plutoengine.libra.command.impl.*;
 import org.plutoengine.libra.paint.LiPaint;
 import org.plutoengine.util.color.Color;
 
-import java.util.*;
+import java.util.Deque;
+import java.util.EnumSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
-public class LiCommandBuffer implements Iterable<LiCommand>
+public final class LiCommandBuffer implements Iterable<LiCommand>
 {
     private final Deque<LiCommand> commands;
 
@@ -18,10 +23,22 @@ public class LiCommandBuffer implements Iterable<LiCommand>
     private Matrix3fc transform;
     private LiPaint paint;
 
-    public LiCommandBuffer()
+    private LiCommandBuffer()
     {
         this.commands = new LinkedList<>();
-        this.commands.push(new LiCommandSetPaint(LiPaint.solidColor(Color.WHITE)));
+    }
+
+    public static LiCommandBuffer cleared()
+    {
+        var cb = new LiCommandBuffer();
+        cb.commands.push(new LiCommandSetPaint(cb.paint = LiPaint.solidColor(Color.WHITE)));
+        cb.commands.push(new LiCommandSetTransform(cb.transform = new Matrix3f()));
+        return cb;
+    }
+
+    public static LiCommandBuffer uncleared()
+    {
+        return new LiCommandBuffer();
     }
 
     public LiCommandBuffer pushAll(LiCommandBuffer commandBuffer)
@@ -87,6 +104,10 @@ public class LiCommandBuffer implements Iterable<LiCommand>
                 this.texture = tex;
             }
 
+            case SPECIAL -> {
+                this.commands.add(command);
+            }
+
             case DRAW_MESH -> mergeInto(command);
         }
 
@@ -124,6 +145,11 @@ public class LiCommandBuffer implements Iterable<LiCommand>
         }
 
         this.commands.add(command);
+    }
+
+    public <T> T withCurrentTransform(Function<Matrix3fc, T> transform)
+    {
+        return transform.apply(this.transform);
     }
 
     public Stream<LiCommand> stream()

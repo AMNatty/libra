@@ -8,6 +8,6 @@ class GUICommandMerger
     {
         return commandBuffers.stream()
                              .reduce(LiCommandBuffer::pushAll)
-                             .orElseGet(LiCommandBuffer::new);
+                             .orElseGet(LiCommandBuffer::uncleared);
     }
 }

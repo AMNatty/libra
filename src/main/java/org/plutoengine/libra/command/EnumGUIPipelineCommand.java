@@ -6,5 +6,6 @@ public enum EnumGUIPipelineCommand
     SET_PAINT,
     SWITCH_SHADER,
     SWITCH_TEXTURE,
+    SPECIAL,
     DRAW_MESH
 }

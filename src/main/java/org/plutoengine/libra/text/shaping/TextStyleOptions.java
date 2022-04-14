@@ -1,6 +1,6 @@
 package org.plutoengine.libra.text.shaping;
 
-import org.joml.Vector2fc;
+import org.joml.primitives.Rectanglef;
 import org.plutoengine.libra.paint.LiPaint;
 import org.plutoengine.libra.text.font.GlyphMetrics;
 import org.plutoengine.libra.text.font.LiFont;
@@ -20,27 +20,27 @@ public class TextStyleOptions
 
     public enum TextAlign
     {
-        LEFT,
+        START,
         CENTER,
-        RIGHT
+        END
     }
 
     public enum OverflowXStrategy
     {
         OVERFLOW,
-        SCALE_TO_FIT,
-        ELLIPSIS,
-        FADE_OUT
+        SCALE_TO_FIT
     }
 
     public enum OverflowYStrategy
     {
         OVERFLOW,
-        SCALE_TO_FIT,
-        FADE_OUT
+        SCALE_TO_FIT
     }
 
-    private Vector2fc fitBox;
+    private TextAlign horizontalAlign;
+    private TextAlign verticalAlign;
+
+    private Rectanglef fitBox;
 
     private @FontStyleValue String style;
 
@@ -56,34 +56,48 @@ public class TextStyleOptions
         this.size = size;
         this.style = STYLE_REGULAR;
         this.paint = LiPaint.solidColor(Color.WHITE);
+        this.overflowX = OverflowXStrategy.OVERFLOW;
+        this.overflowY = OverflowYStrategy.OVERFLOW;
+        this.horizontalAlign = TextAlign.START;
+        this.verticalAlign = TextAlign.END;
     }
 
-    public void setFitBox(Vector2fc fitBox)
+    public TextStyleOptions setFitBox(Rectanglef fitBox)
     {
         this.fitBox = fitBox;
+
+        return this;
     }
 
-    public void setOverflowX(OverflowXStrategy overflowX)
+    public TextStyleOptions setOverflowX(OverflowXStrategy overflowX)
     {
         this.overflowX = overflowX;
+
+        return this;
     }
 
-    public void setOverflowY(OverflowYStrategy overflowY)
+    public TextStyleOptions setOverflowY(OverflowYStrategy overflowY)
     {
         this.overflowY = overflowY;
+
+        return this;
     }
 
-    public void setSize(float size)
+    public TextStyleOptions setSize(float size)
     {
         this.size = size;
+
+        return this;
     }
 
-    public void setStyle(@FontStyleValue String style)
+    public TextStyleOptions setStyle(@FontStyleValue String style)
     {
         this.style = style;
+
+        return this;
     }
 
-    public Vector2fc getFitBox()
+    public Rectanglef getFitBox()
     {
         return this.fitBox;
     }
@@ -108,14 +122,40 @@ public class TextStyleOptions
         return this.style;
     }
 
-    public void setPaint(LiPaint paint)
+    public TextStyleOptions setPaint(LiPaint paint)
     {
         this.paint = paint;
+
+        return this;
     }
 
     public LiPaint getPaint()
     {
         return this.paint;
+    }
+
+    public TextAlign getHorizontalAlign()
+    {
+        return this.horizontalAlign;
+    }
+
+    public TextStyleOptions setHorizontalAlign(TextAlign horizontalAlign)
+    {
+        this.horizontalAlign = horizontalAlign;
+
+        return this;
+    }
+
+    public TextAlign getVerticalAlign()
+    {
+        return this.verticalAlign;
+    }
+
+    public TextStyleOptions setVerticalAlign(TextAlign verticalAlign)
+    {
+        this.verticalAlign = verticalAlign;
+
+        return this;
     }
 
     public <F extends LiFont<G, M>, G extends LiFont<G, M>.GlyphAtlas, M extends GlyphMetrics> F pickFont(LiFontFamily<F> family)

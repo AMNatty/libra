@@ -1,12 +1,13 @@
 package org.plutoengine.libra.text;
 
+import org.joml.primitives.Rectanglef;
 import org.plutoengine.libra.LiInfo;
 import org.plutoengine.libra.command.LiCommandBuffer;
 
 public class LiTextInfo extends LiInfo
 {
-    protected LiTextInfo(LiCommandBuffer commandBuffer)
+    public LiTextInfo(LiCommandBuffer commandBuffer, Rectanglef aabb)
     {
-        super(commandBuffer);
+        super(commandBuffer, aabb);
     }
 }
