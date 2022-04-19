@@ -2,7 +2,7 @@ package org.plutoengine.libra.text.font;
 
 import org.joml.primitives.Rectanglef;
 
-public class GlyphInfo<T extends LiFont<T, M>.GlyphAtlas, M extends GlyphMetrics>
+public class GlyphInfo<T extends LiFont<? super T, ? super M>.GlyphAtlas, M extends GlyphMetrics>
 {
     protected T atlas;
     protected int page;

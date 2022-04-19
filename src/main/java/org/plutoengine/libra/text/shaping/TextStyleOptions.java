@@ -158,7 +158,7 @@ public class TextStyleOptions
         return this;
     }
 
-    public <F extends LiFont<G, M>, G extends LiFont<G, M>.GlyphAtlas, M extends GlyphMetrics> F pickFont(LiFontFamily<F> family)
+    public <F extends LiFont<? super G, M>, G extends LiFont<? super G, M>.GlyphAtlas, M extends GlyphMetrics> F pickFont(LiFontFamily<F> family)
     {
         var font = family.getStyle(this.style);
 

@@ -75,7 +75,7 @@ dependencies {
     if (project.parent != null && project.parent!!.ext.has("isPlutoBuild"))
         api(project(":plutoengine:plutolib"))
     else
-        api("org.plutoengine", "plutolib", "22.1.0.0-alpha.0")
+        api("org.plutoengine", "plutolib", "22.2.0.0-alpha.1")
 
     implementation("org.apache.commons", "commons-lang3", "3.11")
 }
