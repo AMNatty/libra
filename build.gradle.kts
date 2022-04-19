@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "cz.tefek"
-version = "0.0.1-alpha.0"
+version = "0.1.0-alpha.0"
 description = "A Java based UI layout library pluggable into any renderer."
 
 java {
