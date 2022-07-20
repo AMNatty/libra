@@ -24,3 +24,6 @@
 /bin
 /*/bin
 /logs/
+
+/out
+/*/out
